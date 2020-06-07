@@ -1,3 +1,4 @@
+@ignore
 Feature: Amazon Product Select feature
 
   Scenario: Product should be selected successfully

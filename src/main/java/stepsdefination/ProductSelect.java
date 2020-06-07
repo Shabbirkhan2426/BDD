@@ -1,5 +1,7 @@
 package stepsdefination;
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -15,11 +17,18 @@ public class ProductSelect {
     WebDriver driver;
 
 
-    @Given("I am on amazon app")
-    public void I_am_on_amazon_app() {
+    @Before
+
+    public void beforeHook(){
 
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
+    }
+    @Given("I am on amazon app")
+    public void I_am_on_amazon_app() {
+
+        // WebDriverManager.chromedriver().setup();
+        //driver = new ChromeDriver();
         driver.get("https://www.amazon.com/");
 
     }
@@ -32,15 +41,17 @@ public class ProductSelect {
 
     }
     @And("I click on Sign in")
-    public void I_click_on_Sign_in() {
+    public void I_click_on_Sign_in() throws InterruptedException {
 
         driver.findElement(By.partialLinkText("Sign in")).click();
+        Thread.sleep(3000);
 
     }
     @When("I  enter userEmail")
-    public void i_enter_userEmail() {
+    public void i_enter_userEmail() throws InterruptedException {
 
         driver.findElement(By.xpath("//*[@id='ap_email']")).sendKeys("khanshabb111@gmail.com");
+        Thread.sleep(3000);
 
     }
     @And("I click on Continue button")
@@ -75,30 +86,33 @@ public class ProductSelect {
     }
 
     @When("I click on search icon")
-    public void i_click_on_search_icon() {
+    public void i_click_on_search_icon() throws InterruptedException {
 
-        //driver.findElement(By.id("nav-search-submit-text")).click();
-        //driver.findElement(By.xpath("//span[@class='nav-search-submit-text nav-sprite']")).click();
         driver.findElement(By.xpath("//*[@id='nav-search']/form/div[2]/div/input")).click();
+        Thread.sleep(5000);
 
     }
     @And ("I should view laptopcomputers and click on computer to select")
-    public void i_should_view_laptopcomputers_and_click_on_computer_to_select(){
+    public void i_should_view_laptopcomputers_and_click_on_computer_to_select() throws InterruptedException {
 
-        driver.findElement(By.partialLinkText("Business and Student")).click();
+        driver.findElement(By.xpath("//*[@id='search']/div[1]/div[2]/div/span[4]/div[2]/div[2]/div/span/div/div/div/div/div[2]/div[1]/div/div/span/a/div/img")).click();
+        Thread.sleep(5000);
     }
 
-    @When("I click on Add to Cart button")
-    public void i_click_on_Add_to_Cart_button() {
 
-        driver.findElement(By.id("add-to-cart-button")).click();
+    @When("I click on Add to Cart button")
+    public void i_click_on_Add_to_Cart_button() throws InterruptedException {
+
+        driver.findElement(By.xpath("//input[@id='add-to-cart-button']")).click();
+        Thread.sleep(5000);
 
     }
 
 
     @And("I click Procceed to Checkout")
-    public void i_click_Procceed_to_Checkout() {
-        driver.findElement(By.linkText("Proceed to Checkout (1 item)")).click();
+    public void i_click_Procceed_to_Checkout() throws InterruptedException {
+        driver.findElement(By.partialLinkText("checkout")).click();
+        Thread.sleep(4000);
 
     }
     @Then("I should view shipping address information to enter")
@@ -108,6 +122,10 @@ public class ProductSelect {
         System.out.println("Shipping page title is "+ title);
         Assert.assertEquals("Amazon.com: Online Shopping for Electronics, Apparel, Computers, Books, DVDs & more",title);
 
+    }
+    @After
+    public void tearDown(){
+        driver.quit();
     }
 
 }

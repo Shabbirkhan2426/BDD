@@ -7,6 +7,13 @@ import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(plugin = {"pretty", "html:target/cucumber"}, strict = true, features="src/main/resources/",glue = "stepsdefination")
+@CucumberOptions(
+
+        tags = "not @ignore",
+        plugin = {"pretty", "html:target/cucumber"},
+        strict = true,
+        features="src/main/resources/",
+        glue = "stepsdefination")
+
 public class TestRunner {
 }
